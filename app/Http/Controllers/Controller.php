@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TRProject; //ieu
 use App\Models\TRProgrammer;
 use App\Models\TRTester;
 use App\Models\TRTiket;
@@ -19,12 +20,18 @@ class Controller extends BaseController
 
     public function gettiketuser(){
         $daftar_tr_tiket = TRTiket::orderBy('id', 'DESC')->get();
+        $daftar_tr_project = TRProject::orderBy('id', 'DESC')->get(); //ieu
         $daftar_tr_programmer = TRProgrammer::orderBy('id', 'DESC')->get();
         $daftar_tr_tester = TRTester::orderBy('id', 'DESC')->get();
         
+        $tiket_auth_project = $daftar_tr_project->where('user_id', Auth::user()->id); //ieu
         $tiket_auth_programmer = $daftar_tr_programmer->where('user_id', Auth::user()->id);
         $tiket_auth_tester = $daftar_tr_tester->where('user_id', Auth::user()->id);
         $tiketuser = [];
+
+        foreach ($tiket_auth_project as $key => $value) {
+            $tiketuser[$key] = $daftar_tr_tiket->where('id', $value->tr_tiket_id)->first();
+        }
         foreach ($tiket_auth_programmer as $key => $value) {
             $tiketuser[$key] = $daftar_tr_tiket->where('id', $value->tr_tiket_id)->first();
         }

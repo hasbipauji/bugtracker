@@ -76,6 +76,20 @@
                     <div class="dropdown d-none d-lg-inline-block ms-1">
 
                         @if (Auth::user()->access == 'ADMIN')
+
+                        <!-- Ieu-->
+                        @elseif (Auth::user()->access == 'Project_manager') 
+                            <button type="button" class="btn header-item noti-icon waves-effect"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="bell">
+                                <i class="bx bx-bell"></i>
+                                <span class="badge bg-danger rounded-pill" id="nomornotif">
+
+                                    @if (null !== App\Http\Controllers\Controller::gettiketuser())
+                                        {{ count(App\Http\Controllers\Controller::gettiketuser()) }}
+                                    @endif
+                                </span>
+                            </button>
+
                         @elseif (Auth::user()->access == 'PROGRAMMER')
                             <button type="button" class="btn header-item noti-icon waves-effect"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="bell">
@@ -168,7 +182,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
 
                                     @if (Auth::user()->access == 'ADMIN')
-                                        <li><a href="{{ route('dm_admin') }}">Admin</a></li>
+                                        {{-- <li><a href="{{ route('dm_admin') }}">Admin</a></li> --}}
                                         <li><a href="{{ route('dm_project_manager') }}">Project Manager</a></li>
                                     @endif
 
